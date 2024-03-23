@@ -1,5 +1,9 @@
-def setup(**kwargs):
+def setup(*args, **kwargs):
     pass
 
-def output(**kwargs):
+def output(*args, **kwargs):
     pass
+
+LOW = None
+HIGH = None
+OUT = None

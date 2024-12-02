@@ -1,0 +1,10 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "RPi"
+version = "1.0.0"
+description="Package to provide dead end-calls for package RPI_GPIO (e.g. usefull when testing in Pipelines)"
+dependencies = []

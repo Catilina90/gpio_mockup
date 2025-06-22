@@ -1,5 +1,6 @@
 import importlib.resources as resources
 import json
+import logging
 
 BOARD = "board"
 LOW = 0
@@ -11,6 +12,8 @@ IN = "input"
 Current states of all GPIO channels is written in the board_config.json file and may 
 be retrieved from there if required (e.g. to check if an output is high or low)
 """
+
+logger = logging.getLogger(__name__)
 
 
 def setmode(*args, **kwargs):
@@ -30,7 +33,7 @@ def setup(channel, setting, state=LOW):
     with resources.path("RPi.data", "board_config.json") as path:
         with open(path, "w") as board_config:
             config.append({"channel": channel, "setting": setting, "state": state})
-            print(f"New config: {config}")
+            logger.info(f"New config: {config}")
             json.dump(config, board_config)
 
 
@@ -52,12 +55,13 @@ def input(channel):
         with open(path, "r") as board_config:
             config = json.load(board_config)
 
-            print(f"input config: {config}")
+            logger.debug(f"input config: {config}")
 
             pin_config = [i for i in config if i["channel"] == channel][0]
 
             if pin_config["setting"] == OUT:
+                logger.info(f"Pin {channel} is in state {pin_config['state']}")
                 return pin_config["state"]
 
             else:
-                print("TODO")
+                logger.warning("TODO: Behavior of input pins not yet implemented")
